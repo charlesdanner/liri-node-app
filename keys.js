@@ -6,3 +6,7 @@ exports.spotify = {
 exports.bandsInTown = {
     id: process.env.bandskey
 };
+
+exports.omdb = {
+    id: process.env.omdb
+}

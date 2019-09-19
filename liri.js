@@ -1,13 +1,15 @@
 require("dotenv").config();
+var Spotify = require('node-spotify-api')
 
 
 var keys = require("./keys.js");
 var axios = require("axios");
 var moment = require("moment")
 
-var spotify = (keys.spotify);
+var spotify = new Spotify(keys.spotify);
 
 var bandsInTown = keys.bandsInTown.id
+var omdb = keys.omdb.id
 console.log(spotify)
 console.log(bandsInTown)
 
@@ -19,9 +21,12 @@ switch (command) {
         break;
 
     case "spotify-this-song":
-        ///do something
+        spotifyThisSong()
         break;
 
+    case "movie-this":    
+        movieThis()
+        break;
 
 }
 //function called when argument concert-this is inputed into terminal
@@ -60,4 +65,30 @@ function concertThis() {
             console.log(error.config);
         }
     )
+}
+
+function spotifyThisSong(){
+
+}
+
+function movieThis(){
+    var movie
+    if(process.argv[3]){
+        movie = process.argv[3].split(" ").join("+");
+    } else movie = "mr+nobody"
+    
+    queryURL = `http://www.omdbapi.com/?t=${movie}&y=&plot=short&apikey=${omdb}`
+     axios.get(queryURL).then(
+         function(response){
+             var movie = response.data
+             console.log(`Title: ${movie.Title}`)
+             console.log(`Year Released: ${movie.Year}`)
+             console.log(`IMDB Rating: ${movie.Ratings[0].Value}`)
+             console.log(`Rotten Tomatos Rating: ${movie.Ratings[1].Value}`)
+             console.log(`Country Produced in: ${movie.Country}`)
+             console.log(`Original Language: ${movie.Language}`)
+             console.log(`Plot: ${movie.Plot}`)
+             console.log(`Actors: ${movie.Actors}`)
+         }
+     )
 }
