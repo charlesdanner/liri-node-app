@@ -24,7 +24,7 @@ switch (command) {
         spotifyThisSong()
         break;
 
-    case "movie-this":    
+    case "movie-this":
         movieThis()
         break;
 
@@ -67,28 +67,69 @@ function concertThis() {
     )
 }
 
-function spotifyThisSong(){
+function spotifyThisSong() {
+    var songTitle
+    var artist
+    var album
+    var song
+    var preview
+    if (process.argv[3]) {
+        songTitle = process.argv
+    } else songTitle = "the sign"
+
+    spotify.search({ type: 'track', query: songTitle })
+        .then(function (response) {
+
+            if (process.argv[3]) {
+                artist = (response.tracks.items[0].album.artists[0].name);
+                album = response.tracks.items[0].album.name
+                song = response.tracks.items[0].name
+                preview = response.tracks.items[0].preview_url
+            } else {
+
+                response.tracks.items[4].album.artists[0].name === "Ace of Base"
+                artist = (response.tracks.items[4].album.artists[0].name);
+                album = response.tracks.items[4].album.name
+                song = response.tracks.items[4].name
+                preview = response.tracks.items[4].preview_url
+            }
+
+            console.log("--------------------------------------------------------------")
+            console.log("")
+            console.log(`Artist: ${artist}`)
+            console.log(`From the album: ${album}`)
+            console.log(`Song title: ${song}`)
+            console.log(`Link to a preview of song: ${preview}`)
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+
+    // artist = response.tracks.items[4].album.artists[0].name
+    // album = response.tracks.items[4].album.name
+    // song = response.tracks.items[4].name
+    // preview = response.tracks.items[4].preview_url
 
 }
 
-function movieThis(){
+function movieThis() {
     var movie
-    if(process.argv[3]){
+    if (process.argv[3]) {
         movie = process.argv[3].split(" ").join("+");
     } else movie = "mr+nobody"
-    
+
     queryURL = `http://www.omdbapi.com/?t=${movie}&y=&plot=short&apikey=${omdb}`
-     axios.get(queryURL).then(
-         function(response){
-             var movie = response.data
-             console.log(`Title: ${movie.Title}`)
-             console.log(`Year Released: ${movie.Year}`)
-             console.log(`IMDB Rating: ${movie.Ratings[0].Value}`)
-             console.log(`Rotten Tomatos Rating: ${movie.Ratings[1].Value}`)
-             console.log(`Country Produced in: ${movie.Country}`)
-             console.log(`Original Language: ${movie.Language}`)
-             console.log(`Plot: ${movie.Plot}`)
-             console.log(`Actors: ${movie.Actors}`)
-         }
-     )
+    axios.get(queryURL).then(
+        function (response) {
+            var movie = response.data
+            console.log(`Title: ${movie.Title}`)
+            console.log(`Year Released: ${movie.Year}`)
+            console.log(`IMDB Rating: ${movie.Ratings[0].Value}`)
+            console.log(`Rotten Tomatos Rating: ${movie.Ratings[1].Value}`)
+            console.log(`Country Produced in: ${movie.Country}`)
+            console.log(`Original Language: ${movie.Language}`)
+            console.log(`Plot: ${movie.Plot}`)
+            console.log(`Actors: ${movie.Actors}`)
+        }
+    )
 }
