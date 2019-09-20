@@ -38,3 +38,6 @@ do-what-it-says,
 spotify-this-song, ace of spades
 do-what-it-says,
 do-what-it-says,
+spotify-this-song, ace of spades
+movie-this, fantastic four
+concert-this, system of a down

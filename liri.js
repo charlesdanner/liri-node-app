@@ -14,11 +14,12 @@ const inquirer = require("inquirer");
 
 
 var command = process.argv[2];
-var parameter = process.argv[3]
+var parameter;
 var commandLogged = false;
 
 
 function runApp() {
+    combineParameters()
     switch (command) {
         case "concert-this":
             concertThis()
@@ -43,6 +44,15 @@ function runApp() {
     }
 
 }
+
+function combineParameters() {
+    var parameterArr = []
+    for (i = 3; i < process.argv.length; i++) {
+        parameterArr.push(process.argv[i])
+    }
+    parameter = parameterArr.join(" ");
+}
+
 //function called when argument concert-this is inputed into terminal
 function concertThis() {
     var artist = parameter        //artist is equal to the command given
@@ -181,18 +191,18 @@ function pushLog() {
                 return console.log(err)
             }
         })
-    } else{ 
+    } else {
         return;
     }
 
 }
 
-if(process.argv.length < 3){
+if (process.argv.length < 3) {
     inquirer.prompt([
         {
             type: "list",
             message: "What command would you like Liri to carry out?",
-            choices: ["spotify-this-song", "movie-this", "concert-this", "do-what-it-says" ],
+            choices: ["spotify-this-song", "movie-this", "concert-this", "do-what-it-says"],
             name: "command"
         },
         {
@@ -200,11 +210,11 @@ if(process.argv.length < 3){
             message: "Okay, now give the command a parameter. Ex: song name if you chose spotify-this-song or movie name for movie-this",
             name: "parameter"
         }
-    ]).then(function(inquirerResponse){
+    ]).then(function (inquirerResponse) {
         command = inquirerResponse.command;
         parameter = inquirerResponse.parameter;
         runApp();
     })
-} else{
+} else {
     runApp();
 }
