@@ -16,18 +16,20 @@ var parameter = process.argv[3]
 
 
 function runApp() {
-    console.log(parameter)
     switch (command) {
         case "concert-this":
             concertThis()
+            pushLog()
             break;
 
         case "spotify-this-song":
             spotifyThisSong()
+            pushLog()
             break;
 
         case "movie-this":
             movieThis()
+            pushLog()
             break;
 
         case "do-what-it-says":
@@ -97,8 +99,8 @@ function spotifyThisSong() {
                 song = response.tracks.items[0].name
                 preview = response.tracks.items[0].preview_url
             } else {
-                for(var i = 0; i < response.tracks.items.length; i++){
-                    if((response.tracks.items[i].album.artists[0].name === "Ace of Base") && (response.tracks.items[i].name === "The Sign")){
+                for (var i = 0; i < response.tracks.items.length; i++) {
+                    if ((response.tracks.items[i].album.artists[0].name === "Ace of Base") && (response.tracks.items[i].name === "The Sign")) {
                         artist = (response.tracks.items[i].album.artists[0].name);
                         album = response.tracks.items[i].album.name
                         song = response.tracks.items[i].name
@@ -154,13 +156,26 @@ function doWhatItSays() {
             return console.log(err)
         }
         var dataArr = data.split(",");
-        console.log(dataArr);
         command = dataArr[0];
         parameter = dataArr[1].trim().replace(/"/g, '');
         runApp();
         return;
 
 
+    })
+}
+
+function pushLog(){
+    var commands = [];
+    commands.push(command);
+    if(parameter){
+        commands.push(parameter + '\r\n');
+    }    else commands[0] = (`${command},\r\n`)
+    var logTextInput = commands.join(", ")
+    fs.appendFile("log.txt", logTextInput, function(err){
+        if(err){
+            return console.log(err)
+        }
     })
 }
 
