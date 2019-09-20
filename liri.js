@@ -1,36 +1,49 @@
 require("dotenv").config();
-var Spotify = require('node-spotify-api')
+
+const Spotify = require('node-spotify-api')
+const keys = require("./keys.js");
+const axios = require("axios");
+const moment = require("moment")
+const fs = require("fs")
+const spotify = new Spotify(keys.spotify);
+const bandsInTown = keys.bandsInTown.id
+const omdb = keys.omdb.id
 
 
-var keys = require("./keys.js");
-var axios = require("axios");
-var moment = require("moment")
-
-var spotify = new Spotify(keys.spotify);
-
-var bandsInTown = keys.bandsInTown.id
-var omdb = keys.omdb.id
 
 var command = process.argv[2];
+var parameter = process.argv[3]
 
-switch (command) {
-    case "concert-this":
-        concertThis()
-        break;
 
-    case "spotify-this-song":
-        spotifyThisSong()
-        break;
+function runApp() {
+    console.log(parameter)
+    switch (command) {
+        case "concert-this":
+            concertThis()
+            break;
 
-    case "movie-this":
-        movieThis()
-        break;
+        case "spotify-this-song":
+            spotifyThisSong()
+            break;
+
+        case "movie-this":
+            movieThis()
+            break;
+
+        case "do-what-it-says":
+            doWhatItSays()
+            break;
+
+    }
 
 }
 //function called when argument concert-this is inputed into terminal
 function concertThis() {
-    var artist = process.argv[3]        //artist is equal to the command given
+    var artist = parameter        //artist is equal to the command given
+    console.log(artist)
     var urlArtist = artist.split(' ').join('%20');  //if the artist has a space in the name its replaced by %20 for a legitimate url
+    urlArtist.replace('"', '')
+    console.log(urlArtist)
     queryURL = `https://rest.bandsintown.com/artists/${urlArtist}/events?${bandsInTown}`        //query parsed together by urlArtist variable and api key in separate file
     axios.get(queryURL).then(
         function (response) {
@@ -71,14 +84,14 @@ function spotifyThisSong() {
     var album
     var song
     var preview
-    if (process.argv[3]) {
-        songTitle = process.argv[3]
+    if (parameter) {
+        songTitle = parameter
     } else songTitle = "the sign"
 
     spotify.search({ type: 'track', query: songTitle })
         .then(function (response) {
 
-            if (process.argv[3]) {
+            if (parameter) {
                 artist = response.tracks.items[0].album.artists[0].name;
                 album = response.tracks.items[0].album.name
                 song = response.tracks.items[0].name
@@ -104,17 +117,12 @@ function spotifyThisSong() {
             console.log(err);
         });
 
-    // artist = response.tracks.items[4].album.artists[0].name
-    // album = response.tracks.items[4].album.name
-    // song = response.tracks.items[4].name
-    // preview = response.tracks.items[4].preview_url
-
 }
 
 function movieThis() {
     var movie
-    if (process.argv[3]) {
-        movie = process.argv[3].split(" ").join("+");
+    if (parameter) {
+        movie = parameter.split(" ").join("+");
     } else movie = "mr+nobody"
 
     queryURL = `http://www.omdbapi.com/?t=${movie}&y=&plot=short&apikey=${omdb}`
@@ -124,7 +132,7 @@ function movieThis() {
             console.log(`Title: ${movie.Title}`)
             console.log(`Year Released: ${movie.Year}`)
             console.log(`IMDB Rating: ${movie.Ratings[0].Value}`)
-            console.log(`Rotten Tomatos Rating: ${movie.Ratings[1].Value}`)
+            console.log(`Rotten Tomatos Rating: ${movie.Ratings[0].Value}`)
             console.log(`Country Produced in: ${movie.Country}`)
             console.log(`Original Language: ${movie.Language}`)
             console.log(`Plot: ${movie.Plot}`)
@@ -132,3 +140,21 @@ function movieThis() {
         }
     )
 }
+
+function doWhatItSays() {
+    fs.readFile("random.txt", "utf-8", function (err, data) {
+        if (err) {
+            return console.log(err)
+        }
+        var dataArr = data.split(",");
+        console.log(dataArr);
+        command = dataArr[0];
+        parameter = dataArr[1].replace(/"/g, '');
+        runApp();
+        return;
+
+
+    })
+}
+
+runApp();
