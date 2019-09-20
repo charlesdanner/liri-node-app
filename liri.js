@@ -19,7 +19,7 @@ var commandLogged = false;
 
 
 function runApp() {
-    combineParameters()
+
     switch (command) {
         case "concert-this":
             concertThis()
@@ -216,5 +216,6 @@ if (process.argv.length < 3) {
         runApp();
     })
 } else {
+    combineParameters()
     runApp();
 }
