@@ -97,11 +97,14 @@ function spotifyThisSong() {
                 song = response.tracks.items[0].name
                 preview = response.tracks.items[0].preview_url
             } else {
-
-                artist = (response.tracks.items[4].album.artists[0].name);
-                album = response.tracks.items[4].album.name
-                song = response.tracks.items[4].name
-                preview = response.tracks.items[4].preview_url
+                for(var i = 0; i < response.tracks.items.length; i++){
+                    if((response.tracks.items[i].album.artists[0].name === "Ace of Base") && (response.tracks.items[i].name === "The Sign")){
+                        artist = (response.tracks.items[i].album.artists[0].name);
+                        album = response.tracks.items[i].album.name
+                        song = response.tracks.items[i].name
+                        preview = response.tracks.items[i].preview_url
+                    }
+                }
             }
 
             console.log("--------------------------------------------------------------")
@@ -129,6 +132,8 @@ function movieThis() {
     axios.get(queryURL).then(
         function (response) {
             var movie = response.data
+            console.log("--------------------------------------------------------------")
+            console.log("")
             console.log(`Title: ${movie.Title}`)
             console.log(`Year Released: ${movie.Year}`)
             console.log(`IMDB Rating: ${movie.Ratings[0].Value}`)
@@ -137,6 +142,8 @@ function movieThis() {
             console.log(`Original Language: ${movie.Language}`)
             console.log(`Plot: ${movie.Plot}`)
             console.log(`Actors: ${movie.Actors}`)
+            console.log("")
+            console.log("--------------------------------------------------------------")
         }
     )
 }
@@ -149,7 +156,7 @@ function doWhatItSays() {
         var dataArr = data.split(",");
         console.log(dataArr);
         command = dataArr[0];
-        parameter = dataArr[1].replace(/"/g, '');
+        parameter = dataArr[1].trim().replace(/"/g, '');
         runApp();
         return;
 
