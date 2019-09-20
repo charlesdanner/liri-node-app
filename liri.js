@@ -13,6 +13,7 @@ const omdb = keys.omdb.id
 
 var command = process.argv[2];
 var parameter = process.argv[3]
+var commandLogged = false
 
 
 function runApp() {
@@ -20,20 +21,24 @@ function runApp() {
         case "concert-this":
             concertThis()
             pushLog()
+            commandLogged = false;
             break;
 
         case "spotify-this-song":
             spotifyThisSong()
             pushLog()
+            commandLogged = false;
             break;
 
         case "movie-this":
             movieThis()
             pushLog()
+            commandLogged = false;
             break;
 
         case "do-what-it-says":
             doWhatItSays()
+            pushLog()
             break;
 
     }
@@ -165,18 +170,24 @@ function doWhatItSays() {
     })
 }
 
-function pushLog(){
-    var commands = [];
-    commands.push(command);
-    if(parameter){
-        commands.push(parameter + '\r\n');
-    }    else commands[0] = (`${command},\r\n`)
-    var logTextInput = commands.join(", ")
-    fs.appendFile("log.txt", logTextInput, function(err){
-        if(err){
-            return console.log(err)
-        }
-    })
+function pushLog() {
+    if (commandLogged === false) {
+        commandLogged = true;
+        var commands = [];
+        commands.push(command);
+        if (parameter) {
+            commands.push(parameter + '\r\n');
+        } else commands[0] = (`${command},\r\n`)
+        var logTextInput = commands.join(", ")
+        fs.appendFile("log.txt", logTextInput, function (err) {
+            if (err) {
+                return console.log(err)
+            }
+        })
+    } else{ 
+        return;
+    }
+
 }
 
 runApp();
