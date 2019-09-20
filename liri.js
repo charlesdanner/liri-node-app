@@ -10,8 +10,6 @@ var spotify = new Spotify(keys.spotify);
 
 var bandsInTown = keys.bandsInTown.id
 var omdb = keys.omdb.id
-console.log(spotify)
-console.log(bandsInTown)
 
 var command = process.argv[2];
 
@@ -99,6 +97,8 @@ function spotifyThisSong() {
             console.log(`From the album: ${album}`)
             console.log(`Song title: ${song}`)
             console.log(`Link to a preview of song: ${preview}`)
+            console.log("")
+            console.log("--------------------------------------------------------------")
         })
         .catch(function (err) {
             console.log(err);
