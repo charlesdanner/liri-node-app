@@ -25,3 +25,16 @@ spotify-this-song,
 movie-this, jaws
 concert-this, rolling stones
 concert-this, nickelback
+do-what-it-says,
+spotify-this-song, shout at the devil
+movie-this, signs
+concert-this, taylor swift
+do-what-it-says,
+spotify-this-song, method man
+spotify-this-song,
+do-what-it-says,
+do-what-it-says,
+do-what-it-says,
+spotify-this-song, ace of spades
+do-what-it-says,
+do-what-it-says,

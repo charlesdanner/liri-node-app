@@ -23,19 +23,16 @@ function runApp() {
         case "concert-this":
             concertThis()
             pushLog()
-            commandLogged = false;
             break;
 
         case "spotify-this-song":
             spotifyThisSong()
             pushLog()
-            commandLogged = false;
             break;
 
         case "movie-this":
             movieThis()
             pushLog()
-            commandLogged = false;
             break;
 
         case "do-what-it-says":
@@ -211,4 +208,3 @@ if(process.argv.length < 3){
 } else{
     runApp();
 }
-
