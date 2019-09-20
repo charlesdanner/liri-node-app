@@ -74,20 +74,19 @@ function spotifyThisSong() {
     var song
     var preview
     if (process.argv[3]) {
-        songTitle = process.argv
+        songTitle = process.argv[3]
     } else songTitle = "the sign"
 
     spotify.search({ type: 'track', query: songTitle })
         .then(function (response) {
 
             if (process.argv[3]) {
-                artist = (response.tracks.items[0].album.artists[0].name);
+                artist = response.tracks.items[0].album.artists[0].name;
                 album = response.tracks.items[0].album.name
                 song = response.tracks.items[0].name
                 preview = response.tracks.items[0].preview_url
             } else {
 
-                response.tracks.items[4].album.artists[0].name === "Ace of Base"
                 artist = (response.tracks.items[4].album.artists[0].name);
                 album = response.tracks.items[4].album.name
                 song = response.tracks.items[4].name
