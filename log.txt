@@ -15,3 +15,13 @@ do-what-it-says,
 spotify-this-song, 1999
 concert-this, system of a down
 do-what-it-says,
+spotify-this-song, 1999
+spotify-this-song,
+spotify-this-song,
+spotify-this-song, ace of spades
+spotify-this-song,
+spotify-this-song, axes of evil
+spotify-this-song,
+movie-this, jaws
+concert-this, rolling stones
+concert-this, nickelback

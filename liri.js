@@ -1,19 +1,21 @@
 require("dotenv").config();
 
+
 const Spotify = require('node-spotify-api')
 const keys = require("./keys.js");
 const axios = require("axios");
 const moment = require("moment")
 const fs = require("fs")
 const spotify = new Spotify(keys.spotify);
-const bandsInTown = keys.bandsInTown.id
-const omdb = keys.omdb.id
+const bandsInTown = keys.bandsInTown.id;
+const omdb = keys.omdb.id;
+const inquirer = require("inquirer");
 
 
 
 var command = process.argv[2];
 var parameter = process.argv[3]
-var commandLogged = false
+var commandLogged = false;
 
 
 function runApp() {
@@ -47,10 +49,8 @@ function runApp() {
 //function called when argument concert-this is inputed into terminal
 function concertThis() {
     var artist = parameter        //artist is equal to the command given
-    console.log(artist)
     var urlArtist = artist.split(' ').join('%20');  //if the artist has a space in the name its replaced by %20 for a legitimate url
     urlArtist.replace('"', '')
-    console.log(urlArtist)
     queryURL = `https://rest.bandsintown.com/artists/${urlArtist}/events?${bandsInTown}`        //query parsed together by urlArtist variable and api key in separate file
     axios.get(queryURL).then(
         function (response) {
@@ -190,4 +190,25 @@ function pushLog() {
 
 }
 
-runApp();
+if(process.argv.length < 3){
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "What command would you like Liri to carry out?",
+            choices: ["spotify-this-song", "movie-this", "concert-this", "do-what-it-says" ],
+            name: "command"
+        },
+        {
+            type: "input",
+            message: "Okay, now give the command a parameter. Ex: song name if you chose spotify-this-song or movie name for movie-this",
+            name: "parameter"
+        }
+    ]).then(function(inquirerResponse){
+        command = inquirerResponse.command;
+        parameter = inquirerResponse.parameter;
+        runApp();
+    })
+} else{
+    runApp();
+}
+
