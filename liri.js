@@ -4,8 +4,8 @@ require("dotenv").config();
 const Spotify = require('node-spotify-api')
 const keys = require("./keys.js");
 const axios = require("axios");
-const moment = require("moment")
-const fs = require("fs")
+const moment = require("moment");
+const fs = require("fs");
 const spotify = new Spotify(keys.spotify);
 const bandsInTown = keys.bandsInTown.id;
 const omdb = keys.omdb.id;
@@ -46,18 +46,18 @@ function runApp() {
 }
 
 function combineParameters() {
-    var parameterArr = []
+    var parameterArr = [];
     for (i = 3; i < process.argv.length; i++) {
-        parameterArr.push(process.argv[i])
+        parameterArr.push(process.argv[i]);
     }
     parameter = parameterArr.join(" ");
 }
 
 //function called when argument concert-this is inputed into terminal
 function concertThis() {
-    var artist = parameter        //artist is equal to the command given
+    var artist = parameter;        //artist is equal to the command given
     var urlArtist = artist.split(' ').join('%20');  //if the artist has a space in the name its replaced by %20 for a legitimate url
-    urlArtist.replace('"', '')
+    urlArtist.replace('"', '');
     queryURL = `https://rest.bandsintown.com/artists/${urlArtist}/events?${bandsInTown}`        //query parsed together by urlArtist variable and api key in separate file
     axios.get(queryURL).then(
         function (response) {
@@ -198,6 +198,7 @@ function pushLog() {
 }
 
 if (process.argv.length < 3) {
+    
     inquirer.prompt([
         {
             type: "list",
