@@ -66,3 +66,9 @@ do-what-it-says,
 concert-this, system of a down
 movie-this, roots
 do-what-it-says,
+concert-this, taylor swift
+movie-this, jaws
+do-what-it-says,
+spotify-this-song, the middle
+spotify-this-song, the middle
+do-what-it-says,
