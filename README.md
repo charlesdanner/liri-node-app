@@ -34,3 +34,9 @@ In order to get Liri to be able to read and write Liri needed to be able to work
 ### Authors
 
 * Charles Danner - https://github.com/charlesdanner
+
+### Link 
+
+Because Liri requires your own application identification in order to run a link to a live version of the application will not work. However, here is a link to a screen recording of the app working. 
+
+https://github.com/charlesdanner/liri-node-app/raw/master/Recording/Screen%20Recording%20(9-22-2019%2011-43-06%20AM).wmv
