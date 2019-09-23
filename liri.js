@@ -18,7 +18,7 @@ var parameter;
 var commandLogged = false;
 
 
-function runApp() {
+var runApp = () => {
 
     switch (command) {
         case "concert-this":
@@ -45,7 +45,7 @@ function runApp() {
 
 }
 
-function combineParameters() {
+var combineParameters = () => {
     var parameterArr = [];
     for (i = 3; i < process.argv.length; i++) {
         parameterArr.push(process.argv[i]);
@@ -54,7 +54,7 @@ function combineParameters() {
 }
 
 //function called when argument concert-this is inputed into terminal
-function concertThis() {
+var concertThis = () => {
     var artist = parameter;        //artist is equal to the command given
     var urlArtist = artist.split(' ').join('%20');  //if the artist has a space in the name its replaced by %20 for a legitimate url
     urlArtist.replace('"', '');
@@ -62,13 +62,18 @@ function concertThis() {
     axios.get(queryURL).then(
         function (response) {
             for (var i = 0; i < response.data.length; i++) {        //for loop going through the response data
-                var date = moment(response.data[i].datetime)            //variable date is assigned to moment parsing through the time stamp given in data
-                console.log("--------------------------------------------------------------")
-                console.log("")
-                console.log("Concert venue name: " + response.data[i].venue.name);
-                console.log("Location: " + response.data[i].venue.city + ", " + response.data[i].venue.country);    //console logging relevant data to the terminal for the user
-                console.log("Event date: " + date.format("MMMM DD YYYY"))       //event date is formatted correctly using moment
-                console.log("")
+                var date = moment(response.data[i].datetime)  //variable date is assigned to moment parsing through the time stamp given in data
+                console.log( //console logging relevant data to the terminal for the user 
+                    //event date is formatted correctly using moment
+
+`--------------------------------------------------------------
+Concert venue name: ${response.data[i].venue.name}
+Location: ${response.data[i].venue.city}, ${response.data[i].venue.country} 
+Event date: ${date.format("MMMM DD YYYY")}
+
+--------------------------------------------------------------
+`
+                )
             }
         },
 
@@ -92,7 +97,7 @@ function concertThis() {
     )
 }
 
-function spotifyThisSong() {
+var spotifyThisSong = () => {
     var songTitle
     var artist
     var album
@@ -120,23 +125,23 @@ function spotifyThisSong() {
                     }
                 }
             }
+            console.log(
+                `--------------------------------------------------------------
 
-            console.log("--------------------------------------------------------------")
-            console.log("")
-            console.log(`Artist: ${artist}`)
-            console.log(`From the album: ${album}`)
-            console.log(`Song title: ${song}`)
-            console.log(`Link to a preview of song: ${preview}`)
-            console.log("")
-            console.log("--------------------------------------------------------------")
-        })
+Artist: ${artist}
+From the album: ${album}
+Song title: ${song}
+Link to a preview of song: ${preview}
+
+--------------------------------------------------------------`
+            )})
         .catch(function (err) {
             console.log(err);
         });
 
 }
 
-function movieThis() {
+var movieThis = () => {
     var movie
     if (parameter) {
         movie = parameter.split(" ").join("+");
@@ -146,23 +151,25 @@ function movieThis() {
     axios.get(queryURL).then(
         function (response) {
             var movie = response.data
-            console.log("--------------------------------------------------------------")
-            console.log("")
-            console.log(`Title: ${movie.Title}`)
-            console.log(`Year Released: ${movie.Year}`)
-            console.log(`IMDB Rating: ${movie.Ratings[0].Value}`)
-            console.log(`Rotten Tomatos Rating: ${movie.Ratings[0].Value}`)
-            console.log(`Country Produced in: ${movie.Country}`)
-            console.log(`Original Language: ${movie.Language}`)
-            console.log(`Plot: ${movie.Plot}`)
-            console.log(`Actors: ${movie.Actors}`)
-            console.log("")
-            console.log("--------------------------------------------------------------")
+            console.log(
+                `--------------------------------------------------------------
+                
+Title: ${movie.Title}
+Year Released: ${movie.Year}
+IMDB Rating: ${movie.Ratings[0].Value}
+Rotten Tomatos Rating: ${movie.Ratings[0].Value}
+Country Produced in: ${movie.Country}
+Original Language: ${movie.Language}
+Plot: ${movie.Plot}
+Actors: ${movie.Actors}
+
+--------------------------------------------------------------`
+            )
         }
     )
 }
 
-function doWhatItSays() {
+var doWhatItSays = () => {
     fs.readFile("random.txt", "utf-8", function (err, data) {
         if (err) {
             return console.log(err)
@@ -177,7 +184,7 @@ function doWhatItSays() {
     })
 }
 
-function pushLog() {
+var pushLog = () => {
     if (commandLogged === false) {
         commandLogged = true;
         var commands = [];
@@ -198,7 +205,7 @@ function pushLog() {
 }
 
 if (process.argv.length < 3) {
-    
+
     inquirer.prompt([
         {
             type: "list",
