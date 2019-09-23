@@ -74,3 +74,5 @@ spotify-this-song, the middle
 do-what-it-says,
 movie-this, jaws
 movie-this, jaws
+movie-this, jaws
+concert-this, taylor swift

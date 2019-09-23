@@ -67,6 +67,7 @@ var concertThis = () => {
                     //event date is formatted correctly using moment
 
 `--------------------------------------------------------------
+
 Concert venue name: ${response.data[i].venue.name}
 Location: ${response.data[i].venue.city}, ${response.data[i].venue.country} 
 Event date: ${date.format("MMMM DD YYYY")}
