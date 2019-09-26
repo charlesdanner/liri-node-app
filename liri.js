@@ -30,7 +30,7 @@ let cli = () => {            //container to keep things out of global scope
             axios.get(queryURL).then(
                 response => {
                     for (var i = 0; i < response.data.length; i++) {        //for loop going through the response data
-                        var date = moment(response.data[i].datetime)  //variable date is assigned to moment parsing through the time stamp given in data
+                        let date = moment(response.data[i].datetime)  //variable date is assigned to moment parsing through the time stamp given in data
                         console.log( //console logging relevant data to the terminal for the user 
                             //event date is formatted correctly using moment
 
