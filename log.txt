@@ -86,3 +86,13 @@ concert-this,
 do-what-it-says,
 concert-this, devil wears prada
 spotify-this-song, axes of evil
+movie-this,
+spotify-this-song, born to be wild
+movie-this, jaws
+spotify-this-song, living on a prayer
+spotify-this-song, born to be wild
+movie-this, jaws
+movie-this, jaws
+do-what-it-says, spotify-this-song
+concert-this, rage against the machine
+concert-this, taylor swift
